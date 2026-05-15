@@ -52,8 +52,13 @@ ser(futuro,primera,plural,"will be").
 ser(futuro,segunda,plural,"will be").
 ser(futuro,tercera,plural,"will be").
 
-conjugar_verbo(Verbo, Tiempo, Persona, Numero, Conjugacion) :-
-    (   Verbo = "to be" 
-    ->  ser(Tiempo, Persona, Numero, Conjugacion)
-    ;   Conjugacion = Verbo
+conjugar_verbo(Verbo,Tiempo,Persona,Numero,Conjugacion):-
+    tiempo(Tiempo),
+    persona(Persona),
+    numero(Numero),
+    (
+        Verbo = "to be" ->
+    ser(Tiempo,Persona,Numero,R),
+    Conjugacion = R     ;
+        Conjugacion = Verbo.
     ).
