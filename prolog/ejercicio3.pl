@@ -17,7 +17,7 @@ requiere(m3,pocion).
 
 puede_aceptar(Personaje,ID_Mision):-
     personaje(Personaje,Nivel,_),
-    mision(ID_Mision,_,Dificultad),
+    mision(ID_Mision,_,Dificultad,_),
     Nivel>=Dificultad.
 
 xp_acumulada(0,0).
@@ -76,6 +76,7 @@ generar_reporte(Personaje,MisionID,Mensaje):-
 reporteGrupal(ListaPersonajes,MisionID):-
     mision(MisionID,NombreMision,_,XP),
     forall(member(P,ListaPersonajes),puede_aceptar(P,MisionID)),
-    conjugar_accion("ser",presente,terceramplural,FormaVerbal),
-    atomic_list_concat([ListaPersonajes,"",FormaVerbal,"capaces de completar",NombreMision,"por",XP,"XP"]),
+    atomic_list_concat(ListaPersonajes, ', ', NombresTexto),
+    conjugar_accion("ser",presente,tercera,plural,FormaVerbal),
+    atomic_list_concat([NombresTexto,"",FormaVerbal,"capaces de completar",NombreMision,"por",XP,"XP"],Mensaje),
     write(Mensaje).
